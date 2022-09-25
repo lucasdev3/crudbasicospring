@@ -1,14 +1,9 @@
 package com.lucasdev3.crudbasicospring.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "TB_CATEGORIAS")
@@ -21,7 +16,10 @@ public class Category implements Serializable{
 	
 	@Column
 	private String name;
-	
+
+	@OneToMany(mappedBy = "category")
+	private List<Expense> expenses;
+
 	public Category() {
 	}
 	

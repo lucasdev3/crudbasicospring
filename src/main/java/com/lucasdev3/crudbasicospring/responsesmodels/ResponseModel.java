@@ -1,8 +1,8 @@
 package com.lucasdev3.crudbasicospring.responsesmodels;
 
-import java.util.Objects;
-
 import org.springframework.http.HttpStatus;
+
+import java.util.Objects;
 
 public class ResponseModel {
 	
@@ -10,7 +10,7 @@ public class ResponseModel {
 	
 	private HttpStatus message;
 	
-	private Object contentBodyResponse;
+	private Object contentBodyResponse = null;
 
 	public Integer getStatusCode() {
 		return statusCode;
