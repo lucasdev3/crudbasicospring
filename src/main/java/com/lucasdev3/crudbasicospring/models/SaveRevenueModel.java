@@ -3,10 +3,10 @@ package com.lucasdev3.crudbasicospring.models;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class SaveExpenseModel implements Serializable {
+public class SaveRevenueModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String expenseDescription;
+    private String revenueDescription;
 
     private Double value;
 
@@ -14,12 +14,12 @@ public class SaveExpenseModel implements Serializable {
 
     private Integer categoryId;
 
-    public String getExpenseDescription() {
-        return expenseDescription;
+    public String getRevenueDescription() {
+        return revenueDescription;
     }
 
-    public void setExpenseDescription(String expenseDescription) {
-        this.expenseDescription = expenseDescription;
+    public void setRevenueDescription(String revenueDescription) {
+        this.revenueDescription = revenueDescription;
     }
 
     public Double getValue() {
@@ -51,9 +51,9 @@ public class SaveExpenseModel implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SaveExpenseModel that = (SaveExpenseModel) o;
+        SaveRevenueModel that = (SaveRevenueModel) o;
 
-        if (!Objects.equals(expenseDescription, that.expenseDescription))
+        if (!Objects.equals(revenueDescription, that.revenueDescription))
             return false;
         if (!Objects.equals(value, that.value)) return false;
         if (!Objects.equals(status, that.status)) return false;
@@ -62,7 +62,7 @@ public class SaveExpenseModel implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = expenseDescription != null ? expenseDescription.hashCode() : 0;
+        int result = revenueDescription != null ? revenueDescription.hashCode() : 0;
         result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (categoryId != null ? categoryId.hashCode() : 0);

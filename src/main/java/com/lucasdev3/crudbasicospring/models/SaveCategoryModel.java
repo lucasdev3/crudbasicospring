@@ -7,6 +7,8 @@ public class SaveCategoryModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String name;
 
+	private String typeCategory;
+
 	public String getName() {
 		return name;
 	}
@@ -15,22 +17,29 @@ public class SaveCategoryModel implements Serializable {
 		this.name = name;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(name);
+	public String getTypeCategory() {
+		return typeCategory;
+	}
+
+	public void setTypeCategory(String typeCategory) {
+		this.typeCategory = typeCategory;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SaveCategoryModel other = (SaveCategoryModel) obj;
-		return Objects.equals(name, other.name);
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		SaveCategoryModel that = (SaveCategoryModel) o;
+
+		if (!Objects.equals(name, that.name)) return false;
+		return Objects.equals(typeCategory, that.typeCategory);
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		int result = name != null ? name.hashCode() : 0;
+		result = 31 * result + (typeCategory != null ? typeCategory.hashCode() : 0);
+		return result;
+	}
 }
