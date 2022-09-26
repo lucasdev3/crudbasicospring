@@ -1,6 +1,7 @@
 package com.lucasdev3.crudbasicospring.services;
 
 import com.lucasdev3.crudbasicospring.entities.Category;
+import com.lucasdev3.crudbasicospring.enums.Regex;
 import com.lucasdev3.crudbasicospring.models.SaveCategoryModel;
 import com.lucasdev3.crudbasicospring.repositories.CategoryRepository;
 import com.lucasdev3.crudbasicospring.responsesmodels.ResponseModel;
@@ -76,7 +77,14 @@ public class CategoryService {
         try {
             Category category = new Category();
             category.setName(categoryModel.getName());
-            category.setTypeCategory(categoryModel.getTypeCategory());
+            String typeCategory;
+            typeCategory = categoryModel.getTypeCategory();
+            if(!typeCategory.matches(Regex.EXPENSE.toString()) && !typeCategory.matches(Regex.REVENUE.toString())){
+                rm.setStatusCode(400);
+                rm.setMessage(HttpStatus.NOT_ACCEPTABLE);
+                return ResponseEntity.badRequest().body(rm);
+            }
+            category.setTypeCategory(typeCategory);
             Category saveCategory = repoCategory.save(category);
             rm.setStatusCode(200);
             rm.setMessage(HttpStatus.CREATED);
@@ -90,5 +98,4 @@ public class CategoryService {
             return ResponseEntity.badRequest().body(rm);
         }
     }
-
 }
