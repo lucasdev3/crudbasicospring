@@ -15,16 +15,19 @@ public class RevenueResource {
     private RevenueService revenueService;
 
     @GetMapping
+    @CrossOrigin
     public ResponseEntity<ResponseModel> findAll() {
         return revenueService.findAll();
     }
 
     @GetMapping(value = "/{id}")
+    @CrossOrigin
     public ResponseEntity<ResponseModel> findById(@PathVariable Integer id) {
         return revenueService.findById(id);
     }
 
     @PostMapping(value = "/save")
+    @CrossOrigin
     public ResponseEntity<ResponseModel> save(@RequestBody SaveRevenueModel saveRevenueModel) {
         System.out.println(saveRevenueModel.toString());
         return revenueService.save(saveRevenueModel);

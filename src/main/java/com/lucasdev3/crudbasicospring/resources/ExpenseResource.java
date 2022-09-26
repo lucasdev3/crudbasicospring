@@ -15,16 +15,19 @@ public class ExpenseResource {
     private ExpenseService expenseService;
 
     @GetMapping
+    @CrossOrigin
     public ResponseEntity<ResponseModel> findAll() {
         return expenseService.findAll();
     }
 
     @GetMapping(value = "/{id}")
+    @CrossOrigin
     public ResponseEntity<ResponseModel> findById(@PathVariable Integer id) {
         return expenseService.findById(id);
     }
 
     @PostMapping(value = "/save")
+    @CrossOrigin
     public ResponseEntity<ResponseModel> save(@RequestBody SaveExpenseModel expenseModel) {
         return expenseService.save(expenseModel);
     }

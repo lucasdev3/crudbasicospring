@@ -9,22 +9,26 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/categories")
+@CrossOrigin
 public class CategoryResource {
 
 	@Autowired
 	private CategoryService serviceCategory;
 	
 	@GetMapping
+	@CrossOrigin
 	public ResponseEntity<ResponseModel> findAll() {
 		return serviceCategory.findAll();
 	}
 	
 	@GetMapping(value = "/{id}")
+	@CrossOrigin
 	public ResponseEntity<ResponseModel> findById(@PathVariable Integer id) {
 		return serviceCategory.findById(id);
 	}
 	
 	@PostMapping(value = "/save")
+	@CrossOrigin
 	public ResponseEntity<ResponseModel> save(@RequestBody SaveCategoryModel categoryModel) {
 		return serviceCategory.save(categoryModel);
 	}
