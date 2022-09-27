@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/categories")
-@CrossOrigin
 public class CategoryResource {
 
 	@Autowired
-	private CategoryService serviceCategory;
-	
+	private final CategoryService serviceCategory;
+
+	public CategoryResource(CategoryService serviceCategory) {
+		this.serviceCategory = serviceCategory;
+	}
+
 	@GetMapping
 	@CrossOrigin
 	public ResponseEntity<ResponseModel> findAll() {

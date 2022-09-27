@@ -94,7 +94,7 @@ public class RevenueService {
                 rm.setMessage(HttpStatus.NOT_ACCEPTABLE);
                 return ResponseEntity.badRequest().body(rm);
             }
-            revenue.setCategory(category);
+            revenue.setCategoryRevenue(category);
             Revenue saveRevenue = repoRevenue.save(revenue);
             rm.setStatusCode(200);
             rm.setMessage(HttpStatus.CREATED);

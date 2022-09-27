@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "TB_CATEGORIAS")
-public class Category implements Serializable{
+public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -46,6 +46,7 @@ public class Category implements Serializable{
 	public void setTypeCategory(String typeCategory) {
 		this.typeCategory = typeCategory;
 	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -74,4 +75,5 @@ public class Category implements Serializable{
 				", typeCategory='" + typeCategory + '\'' +
 				'}';
 	}
+
 }

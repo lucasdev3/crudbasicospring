@@ -1,12 +1,13 @@
 package com.lucasdev3.crudbasicospring.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "TB_EXPENSE")
-public class Expense {
-
+public class Expense implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,8 +20,9 @@ public class Expense {
 
     @Column(nullable = false)
     private String status;
+
     @JoinColumn(name = "category_id", nullable = false, table = "TB_CATEGORIAS")
-    private Category category;
+    private Category categoryExpense;
 
     public Integer getId() {
         return id;
@@ -54,25 +56,37 @@ public class Expense {
         this.status = status;
     }
 
-    public Category getCategory() {
-        return category;
+    public Category getCategoryExpense() {
+        return categoryExpense;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryExpenseId(Category categoryExpense) {
+        this.categoryExpense = categoryExpense;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Expense expense = (Expense) o;
-        return Objects.equals(id, expense.id) && Objects.equals(expenseDescription, expense.expenseDescription) && Objects.equals(value, expense.value) && Objects.equals(status, expense.status) && Objects.equals(category, expense.category);
+
+        if (!Objects.equals(id, expense.id)) return false;
+        if (!Objects.equals(expenseDescription, expense.expenseDescription))
+            return false;
+        if (!Objects.equals(value, expense.value)) return false;
+        if (!Objects.equals(status, expense.status)) return false;
+        return Objects.equals(categoryExpense, expense.categoryExpense);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, expenseDescription, value, status, category);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (expenseDescription != null ? expenseDescription.hashCode() : 0);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (categoryExpense != null ? categoryExpense.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -82,7 +96,7 @@ public class Expense {
                 ", expenseDescription='" + expenseDescription + '\'' +
                 ", value=" + value +
                 ", status='" + status + '\'' +
-                ", category=" + category +
+                ", categoryExpense=" + categoryExpense +
                 '}';
     }
 }

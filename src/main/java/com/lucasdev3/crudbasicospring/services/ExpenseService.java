@@ -92,7 +92,7 @@ public class ExpenseService {
                 rm.setMessage(HttpStatus.NOT_ACCEPTABLE);
                 return ResponseEntity.badRequest().body(rm);
             }
-            expense.setCategory(category);
+            expense.setCategoryExpenseId(category);
 
             Expense saveExpense = repoExpense.save(expense);
             rm.setStatusCode(200);

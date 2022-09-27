@@ -2,9 +2,11 @@ package com.lucasdev3.crudbasicospring.responsesmodels;
 
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ResponseModel {
+public class ResponseModel implements Serializable {
+	public static final long serialVersionUID = 1L;
 	
 	private Integer statusCode;
 	
@@ -42,18 +44,23 @@ public class ResponseModel {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ResponseModel other = (ResponseModel) obj;
-		return Objects.equals(contentBodyResponse, other.contentBodyResponse) && Objects.equals(message, other.message)
-				&& Objects.equals(statusCode, other.statusCode);
-	}
-	
-	
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
+		ResponseModel that = (ResponseModel) o;
+
+		if (!Objects.equals(statusCode, that.statusCode)) return false;
+		if (message != that.message) return false;
+		return Objects.equals(contentBodyResponse, that.contentBodyResponse);
+	}
+
+	@Override
+	public String toString() {
+		return "ResponseModel{" +
+				"statusCode=" + statusCode +
+				", message=" + message +
+				", contentBodyResponse=" + contentBodyResponse +
+				'}';
+	}
 }

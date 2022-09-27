@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class RevenueResource {
 
     @Autowired
-    private RevenueService revenueService;
+    private final RevenueService revenueService;
+
+    public RevenueResource(RevenueService revenueService) {
+        this.revenueService = revenueService;
+    }
 
     @GetMapping
     @CrossOrigin

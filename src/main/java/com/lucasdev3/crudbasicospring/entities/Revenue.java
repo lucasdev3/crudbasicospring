@@ -23,7 +23,7 @@ public class Revenue implements Serializable {
     private String status;
 
     @JoinColumn(name = "category_id", nullable = false, table = "TB_CATEGORIAS")
-    private Category category;
+    private Category categoryRevenue;
 
     public Integer getId() {
         return id;
@@ -57,12 +57,12 @@ public class Revenue implements Serializable {
         this.status = status;
     }
 
-    public Category getCategory() {
-        return category;
+    public Category getCategoryRevenue() {
+        return categoryRevenue;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryRevenue(Category categoryRevenue) {
+        this.categoryRevenue = categoryRevenue;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class Revenue implements Serializable {
             return false;
         if (!Objects.equals(value, revenue.value)) return false;
         if (!Objects.equals(status, revenue.status)) return false;
-        return Objects.equals(category, revenue.category);
+        return Objects.equals(categoryRevenue, revenue.categoryRevenue);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class Revenue implements Serializable {
         result = 31 * result + (revenueDescription != null ? revenueDescription.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (categoryRevenue != null ? categoryRevenue.hashCode() : 0);
         return result;
     }
 
@@ -97,7 +97,7 @@ public class Revenue implements Serializable {
                 ", revenueDescription='" + revenueDescription + '\'' +
                 ", value=" + value +
                 ", status='" + status + '\'' +
-                ", category=" + category +
+                ", categoryRevenue=" + categoryRevenue +
                 '}';
     }
 }

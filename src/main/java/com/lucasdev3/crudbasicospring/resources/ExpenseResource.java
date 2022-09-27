@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class ExpenseResource {
 
     @Autowired
-    private ExpenseService expenseService;
+    private final ExpenseService expenseService;
+
+    public ExpenseResource(ExpenseService expenseService) {
+        this.expenseService = expenseService;
+    }
 
     @GetMapping
     @CrossOrigin
