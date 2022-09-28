@@ -1,7 +1,7 @@
 package com.lucasdev3.crudbasicospring.resources;
 
 import com.lucasdev3.crudbasicospring.dto.CreateUserRoleDTO;
-import com.lucasdev3.crudbasicospring.entities.User;
+import com.lucasdev3.crudbasicospring.models.SaveUserFormModel;
 import com.lucasdev3.crudbasicospring.responsesmodels.ResponseModel;
 import com.lucasdev3.crudbasicospring.services.CreateRoleUserService;
 import com.lucasdev3.crudbasicospring.services.CreateUserService;
@@ -23,8 +23,8 @@ public class UserResource {
     CreateRoleUserService createRoleUserService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseModel> createUser(@RequestBody User user) {
-        return createUserService.execute(user);
+    public ResponseEntity<ResponseModel> createUser(@RequestBody SaveUserFormModel userFormModel) {
+        return createUserService.createUser(userFormModel);
     }
 
     @PostMapping("/role-user/create")
