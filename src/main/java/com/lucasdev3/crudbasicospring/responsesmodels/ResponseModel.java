@@ -14,6 +14,8 @@ public class ResponseModel implements Serializable {
 	
 	private Object contentBodyResponse = null;
 
+	private String responseDescription;
+
 	public Integer getStatusCode() {
 		return statusCode;
 	}
@@ -36,6 +38,14 @@ public class ResponseModel implements Serializable {
 
 	public void setContentBodyResponse(Object contentBodyResponse) {
 		this.contentBodyResponse = contentBodyResponse;
+	}
+
+	public String getResponseDescription() {
+		return responseDescription;
+	}
+
+	public void setResponseDescription(String responseDescription) {
+		this.responseDescription = responseDescription;
 	}
 
 	@Override

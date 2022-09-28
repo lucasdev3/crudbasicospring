@@ -28,7 +28,7 @@ public class UserResource {
     }
 
     @PostMapping("/role-user/create")
-    public User createRole(@RequestBody CreateUserRoleDTO createUserRoleDTO) {
+    public ResponseEntity<ResponseModel> createRole(@RequestBody CreateUserRoleDTO createUserRoleDTO) {
         return createRoleUserService.execute(createUserRoleDTO);
     }
 

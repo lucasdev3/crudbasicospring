@@ -9,6 +9,12 @@ import java.util.Objects;
 public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String roleName;
+
     public Role() {
     }
 
@@ -16,16 +22,10 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public Role(Integer id, String name) {
+    public Role(Integer id, String roleName) {
         this.id = id;
-        this.name = name;
+        this.roleName = roleName;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private String name;
 
     public Integer getId() {
         return id;
@@ -35,12 +35,12 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     @Override
@@ -51,13 +51,13 @@ public class Role implements Serializable {
         Role role = (Role) o;
 
         if (!Objects.equals(id, role.id)) return false;
-        return Objects.equals(name, role.name);
+        return Objects.equals(roleName, role.roleName);
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (roleName != null ? roleName.hashCode() : 0);
         return result;
     }
 
@@ -65,7 +65,7 @@ public class Role implements Serializable {
     public String toString() {
         return "Role{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + roleName + '\'' +
                 '}';
     }
 }
