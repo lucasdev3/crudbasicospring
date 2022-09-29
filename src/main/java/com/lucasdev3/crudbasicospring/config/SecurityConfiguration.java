@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -34,6 +35,11 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         registry.addMapping("/user/registrar")
                 .allowedOrigins(PUBLIC_HOST)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 //    @Override
