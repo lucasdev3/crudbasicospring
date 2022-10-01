@@ -1,6 +1,8 @@
 package com.lucasdev3.crudbasicospring.services;
 
+import com.lucasdev3.crudbasicospring.config.JwtTokenUtil;
 import com.lucasdev3.crudbasicospring.config.SecurityConfiguration;
+import com.lucasdev3.crudbasicospring.config.UserDetailsServiceImpl;
 import com.lucasdev3.crudbasicospring.entities.Role;
 import com.lucasdev3.crudbasicospring.entities.User;
 import com.lucasdev3.crudbasicospring.models.LoginUserFormModel;
@@ -10,6 +12,11 @@ import com.lucasdev3.crudbasicospring.responsesmodels.ResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +27,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class CreateUserService {
+public class UserService {
 
     @Autowired
     UserRepository userRepository;
@@ -28,7 +35,14 @@ public class CreateUserService {
     @Autowired
     SecurityConfiguration sc;
 
-    String rawPassword = "java2022";
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<ResponseModel> createUser(SaveUserFormModel userFormModel) {
@@ -85,7 +99,6 @@ public class CreateUserService {
 
     public ResponseEntity<ResponseModel> loginUser(LoginUserFormModel loginUserFormModel) {
         ResponseModel rm = new ResponseModel();
-        User user = new User();
 
         try {
 
@@ -119,9 +132,16 @@ public class CreateUserService {
                 rm.setResponseDescription("Senha inválida!");
                 return ResponseEntity.badRequest().body(rm);
             }
+
+            authenticate(existsUser.get().getUsername(), existsUser.get().getPassword());
+
+            final UserDetails userDetails  = userDetailsService.loadUserByUsername(existsUser.get().getUsername());
+
+            final String token = jwtTokenUtil.generateToken(userDetails);
+
             rm.setStatusCode(200);
             rm.setMessage(HttpStatus.OK);
-            rm.setResponseDescription("Logado com sucesso!");
+            rm.setResponseDescription("Logado com sucesso!\nToken: " + token);
             return ResponseEntity.badRequest().body(rm);
 
 
@@ -131,5 +151,17 @@ public class CreateUserService {
         }
     }
 
+
+    private void authenticate(String username, String password) throws Exception {
+
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
+
+    }
 
 }
