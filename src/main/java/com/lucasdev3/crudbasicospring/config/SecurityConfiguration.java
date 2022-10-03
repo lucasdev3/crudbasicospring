@@ -9,7 +9,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import static com.lucasdev3.crudbasicospring.global.constants.GlobalConstants.PUBLIC_HOST;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -22,6 +21,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .authorizeHttpRequests((authz) -> authz
                         .anyRequest().permitAll()//authenticated()
                 )
+                .cors().and()
                 .httpBasic(withDefaults())
                 .csrf().disable();
         return http.build();
@@ -29,18 +29,19 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/categories/**")
-                .allowedOrigins(PUBLIC_HOST)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
-        registry.addMapping("/expenses/**")
-                .allowedOrigins(PUBLIC_HOST)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
-        registry.addMapping("/revenues/**")
-                .allowedOrigins(PUBLIC_HOST)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
-        registry.addMapping("/users/**")
-                .allowedOrigins(PUBLIC_HOST)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
+//        registry.addMapping("/categories/**")
+//                .allowedOrigins(PUBLIC_HOST)
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
+//        registry.addMapping("/expenses/**")
+//                .allowedOrigins(PUBLIC_HOST)
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
+//        registry.addMapping("/revenues/**")
+//                .allowedOrigins(PUBLIC_HOST)
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
+//        registry.addMapping("/users/**")
+//                .allowedOrigins(PUBLIC_HOST)
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
+        registry.addMapping("/**");
     }
 
     @Bean
