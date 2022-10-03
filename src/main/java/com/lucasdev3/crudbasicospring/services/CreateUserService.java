@@ -122,7 +122,7 @@ public class CreateUserService {
             rm.setStatusCode(200);
             rm.setMessage(HttpStatus.OK);
             rm.setResponseDescription("Logado com sucesso!");
-            return ResponseEntity.badRequest().body(rm);
+            return ResponseEntity.ok().body(rm);
 
 
         } catch (Exception e) {
