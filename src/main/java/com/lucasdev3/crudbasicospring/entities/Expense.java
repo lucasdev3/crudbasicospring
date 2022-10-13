@@ -15,14 +15,18 @@ public class Expense implements Serializable {
     @Column(nullable = false)
     private String expenseDescription;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 11, scale = 2)
     private Double value;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 15)
     private String status;
 
     @JoinColumn(name = "category_id", nullable = false, table = "TB_CATEGORIAS")
     private Category categoryExpense;
+
+    @JoinColumn(name = "id", nullable = false, table = "TB_USERS")
+    private User user;
+
 
     public Integer getId() {
         return id;
@@ -64,6 +68,14 @@ public class Expense implements Serializable {
         this.categoryExpense = categoryExpense;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,7 +88,9 @@ public class Expense implements Serializable {
             return false;
         if (!Objects.equals(value, expense.value)) return false;
         if (!Objects.equals(status, expense.status)) return false;
-        return Objects.equals(categoryExpense, expense.categoryExpense);
+        if (!Objects.equals(categoryExpense, expense.categoryExpense))
+            return false;
+        return Objects.equals(user, expense.user);
     }
 
     @Override
@@ -86,17 +100,7 @@ public class Expense implements Serializable {
         result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (categoryExpense != null ? categoryExpense.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Expense{" +
-                "id=" + id +
-                ", expenseDescription='" + expenseDescription + '\'' +
-                ", value=" + value +
-                ", status='" + status + '\'' +
-                ", categoryExpense=" + categoryExpense +
-                '}';
     }
 }

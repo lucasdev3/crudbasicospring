@@ -28,7 +28,6 @@ public class CreateRoleUserService {
             List<Role> roles = new ArrayList<>();
 
             if (userExists.isEmpty()) {
-                rm.setStatusCode(400);
                 rm.setMessage(HttpStatus.UNAUTHORIZED);
                 rm.setResponseDescription("Usuario não cadastrado!");
                 rm.setContentBodyResponse(null);
@@ -40,13 +39,11 @@ public class CreateRoleUserService {
             User user = userExists.get();
             user.setRoles(roles);
             userRepository.save(user);
-            rm.setStatusCode(200);
             rm.setMessage(HttpStatus.OK);
             rm.setContentBodyResponse(user);
             return ResponseEntity.ok().body(rm);
         } catch (Exception e) {
             System.out.println("Erro: " + e);
-            rm.setStatusCode(200);
             rm.setMessage(HttpStatus.BAD_REQUEST);
             rm.setContentBodyResponse(null);
             return ResponseEntity.badRequest().body(rm);

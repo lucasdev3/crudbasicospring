@@ -32,7 +32,7 @@ public class CategoryResource {
 	
 	@PostMapping(value = "/save")
 	@CrossOrigin
-	public ResponseEntity<ResponseModel> save(@RequestBody SaveCategoryModel categoryModel) {
+	public ResponseEntity<?> save(@RequestBody SaveCategoryModel categoryModel) {
 		return serviceCategory.save(categoryModel);
 	}
 }

@@ -5,7 +5,7 @@ import com.lucasdev3.crudbasicospring.models.LoginUserFormModel;
 import com.lucasdev3.crudbasicospring.models.SaveUserFormModel;
 import com.lucasdev3.crudbasicospring.responsesmodels.ResponseModel;
 import com.lucasdev3.crudbasicospring.services.CreateRoleUserService;
-import com.lucasdev3.crudbasicospring.services.CreateUserService;
+import com.lucasdev3.crudbasicospring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserResource {
 
     @Autowired
-    CreateUserService createUserService;
+    UserService userService;
 
     @Autowired
     CreateRoleUserService createRoleUserService;
@@ -23,7 +23,7 @@ public class UserResource {
     @PostMapping("/create")
     @CrossOrigin
     public ResponseEntity<ResponseModel> createUser(@RequestBody SaveUserFormModel userFormModel) {
-        return createUserService.createUser(userFormModel);
+        return userService.createUser(userFormModel);
     }
 
     @PostMapping("/role-user/create")
@@ -35,7 +35,7 @@ public class UserResource {
     @PostMapping("/login")
     @CrossOrigin
     public ResponseEntity<ResponseModel> loginUser(@RequestBody LoginUserFormModel loginUserFormModel) {
-        return createUserService.loginUser(loginUserFormModel);
+        return userService.loginUser(loginUserFormModel);
     }
 
 }

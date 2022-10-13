@@ -13,11 +13,22 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 150)
 	private String name;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 7)
 	private String typeCategory;
+	
+    @JoinColumn(name = "id", nullable = false, table = "TB_USERS")
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public Category() {
 	}

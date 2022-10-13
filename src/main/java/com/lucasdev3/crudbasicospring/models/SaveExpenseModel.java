@@ -14,6 +14,8 @@ public class SaveExpenseModel implements Serializable {
 
     private Integer categoryId;
 
+    private Integer userId;
+
     public String getExpenseDescription() {
         return expenseDescription;
     }
@@ -46,6 +48,14 @@ public class SaveExpenseModel implements Serializable {
         this.categoryId = categoryId;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,7 +67,8 @@ public class SaveExpenseModel implements Serializable {
             return false;
         if (!Objects.equals(value, that.value)) return false;
         if (!Objects.equals(status, that.status)) return false;
-        return Objects.equals(categoryId, that.categoryId);
+        if (!Objects.equals(categoryId, that.categoryId)) return false;
+        return Objects.equals(userId, that.userId);
     }
 
     @Override
@@ -66,6 +77,7 @@ public class SaveExpenseModel implements Serializable {
         result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (categoryId != null ? categoryId.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
     }
 }

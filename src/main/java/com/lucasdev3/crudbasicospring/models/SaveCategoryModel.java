@@ -5,9 +5,12 @@ import java.util.Objects;
 
 public class SaveCategoryModel implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	private String name;
 
 	private String typeCategory;
+
+	private Integer userId;
 
 	public String getName() {
 		return name;
@@ -25,6 +28,14 @@ public class SaveCategoryModel implements Serializable {
 		this.typeCategory = typeCategory;
 	}
 
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer idUser) {
+		this.userId = idUser;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -33,13 +44,15 @@ public class SaveCategoryModel implements Serializable {
 		SaveCategoryModel that = (SaveCategoryModel) o;
 
 		if (!Objects.equals(name, that.name)) return false;
-		return Objects.equals(typeCategory, that.typeCategory);
+		if (!Objects.equals(typeCategory, that.typeCategory)) return false;
+		return Objects.equals(userId, that.userId);
 	}
 
 	@Override
 	public int hashCode() {
 		int result = name != null ? name.hashCode() : 0;
 		result = 31 * result + (typeCategory != null ? typeCategory.hashCode() : 0);
+		result = 31 * result + (userId != null ? userId.hashCode() : 0);
 		return result;
 	}
 }

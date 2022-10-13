@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class CreateUserService {
+public class UserService {
 
     @Autowired
     UserRepository userRepository;
@@ -28,14 +28,11 @@ public class CreateUserService {
     @Autowired
     SecurityConfiguration sc;
 
-    String rawPassword = "java2022";
-
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<ResponseModel> createUser(SaveUserFormModel userFormModel) {
         ResponseModel rm = new ResponseModel();
         User user = new User();
         try {
-
             if(userFormModel.getName().isEmpty()) {
                 rm.setMessage(HttpStatus.NO_CONTENT);
                 rm.setResponseDescription("Nome inválido");
@@ -51,11 +48,9 @@ public class CreateUserService {
                 rm.setResponseDescription("Senha inválida");
                 return ResponseEntity.badRequest().body(rm);
             }
-
             Optional<User> existsUser = userRepository.findByUsername(userFormModel.getUsername());
             List<Role> idRoles = new ArrayList<>();
             if (existsUser.isPresent()) {
-                rm.setStatusCode(401);
                 rm.setMessage(HttpStatus.UNAUTHORIZED);
                 rm.setResponseDescription("Usuario ja cadastrado");
                 return ResponseEntity.badRequest().body(rm);
@@ -64,20 +59,17 @@ public class CreateUserService {
             user.setUsername(userFormModel.getUsername());
             idRoles.add(new Role(1, "USER"));
             user.setRoles(idRoles);
-
             BCryptPasswordEncoder bCryptPasswordEncoder = sc.bCryptPasswordEncoder();
             String encodedPassword =  bCryptPasswordEncoder.encode(userFormModel.getPassword());
             System.out.println("Encoded Password: " + encodedPassword);
             user.setPassword(encodedPassword);
             userRepository.save(user);
-            rm.setStatusCode(200);
             rm.setMessage(HttpStatus.CREATED);
             rm.setResponseDescription("Usuario cadastrado com sucesso");
             rm.setContentBodyResponse(user);
             return ResponseEntity.ok().body(rm);
         } catch (Error e) {
             System.out.println("Erro: " + e);
-            rm.setStatusCode(500);
             rm.setMessage(HttpStatus.BAD_REQUEST);
             return ResponseEntity.badRequest().body(null);
         }
@@ -102,7 +94,6 @@ public class CreateUserService {
 
             Optional<User> existsUser = userRepository.findByUsername(loginUserFormModel.getUsername());
             if (existsUser.isEmpty()) {
-                rm.setStatusCode(401);
                 rm.setMessage(HttpStatus.UNAUTHORIZED);
                 rm.setResponseDescription("Usuario não encontrado");
                 return ResponseEntity.badRequest().body(rm);
@@ -114,12 +105,10 @@ public class CreateUserService {
             Boolean isEqualsPasswords = bCryptPasswordEncoder.matches(formPassword, existsUser.get().getPassword());
 
             if(Objects.equals(isEqualsPasswords, Boolean.FALSE)) {
-                rm.setStatusCode(401);
                 rm.setMessage(HttpStatus.UNAUTHORIZED);
                 rm.setResponseDescription("Senha inválida!");
                 return ResponseEntity.badRequest().body(rm);
             }
-            rm.setStatusCode(200);
             rm.setMessage(HttpStatus.OK);
             rm.setResponseDescription("Logado com sucesso!");
             return ResponseEntity.ok().body(rm);

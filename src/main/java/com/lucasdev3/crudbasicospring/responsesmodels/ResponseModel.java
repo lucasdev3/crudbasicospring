@@ -7,22 +7,12 @@ import java.util.Objects;
 
 public class ResponseModel implements Serializable {
 	public static final long serialVersionUID = 1L;
-	
-	private Integer statusCode;
-	
+
 	private HttpStatus message;
 	
 	private Object contentBodyResponse = null;
 
 	private String responseDescription;
-
-	public Integer getStatusCode() {
-		return statusCode;
-	}
-
-	public void setStatusCode(Integer statusCode) {
-		this.statusCode = statusCode;
-	}
 
 	public HttpStatus getMessage() {
 		return message;
@@ -49,28 +39,32 @@ public class ResponseModel implements Serializable {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(contentBodyResponse, message, statusCode);
-	}
-
-	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
 		ResponseModel that = (ResponseModel) o;
 
-		if (!Objects.equals(statusCode, that.statusCode)) return false;
 		if (message != that.message) return false;
-		return Objects.equals(contentBodyResponse, that.contentBodyResponse);
+		if (!Objects.equals(contentBodyResponse, that.contentBodyResponse))
+			return false;
+		return Objects.equals(responseDescription, that.responseDescription);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = message != null ? message.hashCode() : 0;
+		result = 31 * result + (contentBodyResponse != null ? contentBodyResponse.hashCode() : 0);
+		result = 31 * result + (responseDescription != null ? responseDescription.hashCode() : 0);
+		return result;
 	}
 
 	@Override
 	public String toString() {
 		return "ResponseModel{" +
-				"statusCode=" + statusCode +
-				", message=" + message +
+				"message=" + message +
 				", contentBodyResponse=" + contentBodyResponse +
+				", responseDescription='" + responseDescription + '\'' +
 				'}';
 	}
 }

@@ -16,14 +16,17 @@ public class Revenue implements Serializable {
     @Column(nullable = false)
     private String revenueDescription;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 11, scale = 2)
     private Double value;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 15)
     private String status;
 
     @JoinColumn(name = "category_id", nullable = false, table = "TB_CATEGORIAS")
     private Category categoryRevenue;
+
+    @JoinColumn(name = "id", nullable = false, table = "TB_USERS")
+    private User user;
 
     public Integer getId() {
         return id;
@@ -65,6 +68,14 @@ public class Revenue implements Serializable {
         this.categoryRevenue = categoryRevenue;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,7 +88,9 @@ public class Revenue implements Serializable {
             return false;
         if (!Objects.equals(value, revenue.value)) return false;
         if (!Objects.equals(status, revenue.status)) return false;
-        return Objects.equals(categoryRevenue, revenue.categoryRevenue);
+        if (!Objects.equals(categoryRevenue, revenue.categoryRevenue))
+            return false;
+        return Objects.equals(user, revenue.user);
     }
 
     @Override
@@ -87,17 +100,7 @@ public class Revenue implements Serializable {
         result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (categoryRevenue != null ? categoryRevenue.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Revenue{" +
-                "id=" + id +
-                ", revenueDescription='" + revenueDescription + '\'' +
-                ", value=" + value +
-                ", status='" + status + '\'' +
-                ", categoryRevenue=" + categoryRevenue +
-                '}';
     }
 }

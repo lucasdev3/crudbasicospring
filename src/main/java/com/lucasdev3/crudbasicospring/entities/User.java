@@ -10,18 +10,19 @@ import java.util.List;
 @Entity
 @Table(name = "TB_USERS")
 public class User implements UserDetails {
+	private static final long serialVersionUID = 1L;
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column
     private String name;
 
-    @Column
+    @Column(nullable = false, unique = true, length = 30)
     private String username;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
     @ManyToMany
